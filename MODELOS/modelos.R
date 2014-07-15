@@ -129,6 +129,13 @@ plot(rules, method="graph", control=list(type="items"))
 ## ...Random Forests
 library(randomForest)
 set.seed(5123512)
-fmodel <- randomForest(x=titanic[,c("Age","Sex","Pclass")],y=titanic$Survived,ntree=100,nodesize=7,importance=T)
+fmodel <- randomForest(Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare + Embarked, data=titanic, importance=TRUE, ntree=8000)
+
+## .... Random Forests con Party
+library(party)
+set.seed(415)
+fit_rand_forest <- cforest(Survived ~ Pclass + Sex + Age + SibSp + Fare+ Parch + Embarked,
+               data = titanic, controls=cforest_unbiased(ntree=5000, mtry=3))
+
 
 
